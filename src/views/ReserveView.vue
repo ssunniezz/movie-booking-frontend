@@ -78,7 +78,11 @@
                     </v-btn>
                   </v-col>
                 </v-row>
-                <v-row align="center" justify="center" v-if="admin">
+                <v-row
+                  align="center"
+                  justify="center"
+                  v-if="$store.state.role === 'ADMIN'"
+                >
                   <v-col cols="2">
                     <v-subheader>Reserved Seats</v-subheader>
                   </v-col>
@@ -114,7 +118,7 @@
                   <v-col cols="1" class="ml-n16">
                     <v-btn
                       depressed
-                      v-if="admin"
+                      v-if="$store.state.role === 'ADMIN'"
                       :disabled="seatsReserved.length === 0"
                       color="error"
                       @click="clearReservedSeats()"
@@ -162,7 +166,6 @@ export default {
       // Rendering helper
       seatColor: [],
       loaded: false,
-      admin: true,
     };
   },
   async mounted() {
