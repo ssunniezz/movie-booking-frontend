@@ -13,7 +13,7 @@
           </v-col>
         </v-footer>
         <v-row>
-          <v-slide-group v-model="model" class="pa-4" center-active show-arrows>
+          <v-slide-group class="pa-4" center-active show-arrows>
             <v-slide-item
               v-for="auditorium in auditoriums"
               :key="auditorium.id"
@@ -34,7 +34,7 @@
                   class="text-center"
                   style="position: absolute; bottom: -15px"
                 >
-                  <v-bottom-sheet v-model="sheet" inset>
+                  <v-bottom-sheet inset>
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
                         color="primary"

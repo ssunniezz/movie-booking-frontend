@@ -1,31 +1,19 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "@/store";
-import LoginView from "@/views/LoginView";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "Login",
-    component: LoginView,
-  },
-  {
     path: "/admin",
     name: "admin",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AdminView.vue"),
   },
   {
     path: "/edit/:userUsername",
     name: "editUser",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/EditUser.vue"),
   },
@@ -35,11 +23,8 @@ const routes = [
     component: () => import("../views/ReserveView"),
   },
   {
-    path: "/movie",
+    path: "/",
     name: "movie",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/MovieView.vue"),
   },
@@ -68,36 +53,57 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/ChangePasswordView.vue"),
   },
+  {
+    path: "/reserveList",
+    name: "reserveList",
+    component: () => import("../views/SeatReservedListView.vue"),
+  },
 ];
 
 const router = new VueRouter({
   routes,
 });
+
 router.beforeEach(async (to, from, next) => {
   // get login state using whomai and axios
   let response = await Vue.axios.get("/api/whoAmI");
   // response.data is our payload
   await store.dispatch("setLoggedInUser", response.data);
+
   let isLoggedIn = store.state.isLoggedIn;
+  // allow logged-out user to access only movie, login, signup page
+  if (!isLoggedIn) {
+    if (to.name === "Login" || to.name === "Signup") {
+      next();
+    } else if (to.name === "movie") {
+      next();
+    } else {
+      next({ name: "movie" });
+    }
+  }
   // make sure if user is logged, user will not be able to see login page
-  if (to.name === "Login" && isLoggedIn) {
-    next({ name: "movie" });
-  }
-  if (to.name === "admin" && isLoggedIn && response.data.role !== "ADMIN") {
-    next({ name: "movie" });
-  }
-  if (to.name === "editUser" && isLoggedIn && response.data.role !== "ADMIN") {
-    next({ name: "movie" });
-  }
-  if (to.name === "UserList" && isLoggedIn && response.data.role !== "ADMIN") {
-    next({ name: "movie" });
-  }
-  if (to.name !== "Login" && to.name !== "Signup" && !isLoggedIn) {
-    // redirect to login page
-    next({ name: "Login" });
-  } else {
-    // otherwise, let go
-    next();
+  if (isLoggedIn) {
+    if (to.name === "Login" || to.name === "Signup") {
+      next({ name: "movie" });
+    }
+    if (to.name === "admin" && response.data.role !== "ADMIN") {
+      next({ name: "movie" });
+    }
+    if (to.name === "editUser" && response.data.role !== "ADMIN") {
+      next({ name: "movie" });
+    }
+    if (to.name === "UserList" && response.data.role !== "ADMIN") {
+      next({ name: "movie" });
+    } else {
+      let l = router.resolve(to);
+      if (l.resolved.matched.length > 0) {
+        // let go
+        next();
+      } else {
+        // otherwise go to home page
+        next({ name: "movie" });
+      }
+    }
   }
 });
 export default router;
