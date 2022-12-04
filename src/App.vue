@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <v-toolbar-title style="cursor: pointer" @click="redirect('/movie')"
+      <v-toolbar-title style="cursor: pointer" @click="redirect('/')"
         ><h2>SSC Theatre</h2></v-toolbar-title
       >
       <v-spacer></v-spacer>
@@ -21,14 +21,7 @@
       >
         User List</v-btn
       >
-      <v-btn
-        v-if="$store.state.isLoggedIn"
-        class="mr-4"
-        plain
-        @click="redirect('/movie')"
-      >
-        Movies</v-btn
-      >
+      <v-btn class="mr-4" plain @click="redirect('/')"> Movies</v-btn>
       <v-btn
         v-if="$store.state.isLoggedIn"
         color="error"
@@ -36,6 +29,22 @@
         @click="logout"
       >
         Logout</v-btn
+      >
+      <v-btn
+        v-if="!$store.state.isLoggedIn"
+        class="mr-4"
+        plain
+        @click="redirect('/signup')"
+      >
+        Sign up</v-btn
+      >
+      <v-btn
+        v-if="!$store.state.isLoggedIn"
+        color="success"
+        class="mr-4"
+        @click="redirect('/login')"
+      >
+        Login</v-btn
       >
     </v-app-bar>
 
@@ -62,7 +71,7 @@ export default {
       let response = await Vue.axios.get("/api/logout");
       if (response.data.success) {
         alert("success!!");
-        await this.$router.push({ path: "/login" });
+        await this.$router.push({ path: "/home" });
       } else {
         alert("error");
       }
