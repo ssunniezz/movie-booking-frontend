@@ -1,36 +1,42 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
+      <v-toolbar-title style="cursor: pointer" @click="redirect('/movie')"
+        ><h2>SSC Theatre</h2></v-toolbar-title
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      <v-spacer></v-spacer>
+      <v-btn
+        v-if="$store.state.role === 'ADMIN'"
+        class="mr-4"
+        plain
+        @click="redirect('/admin')"
+      >
+        Manage</v-btn
+      >
+      <v-btn
+        v-if="$store.state.role === 'ADMIN'"
+        class="mr-4"
+        plain
+        @click="redirect('/user')"
+      >
+        User List</v-btn
+      >
+      <v-btn
+        v-if="$store.state.isLoggedIn"
+        class="mr-4"
+        plain
+        @click="redirect('/movie')"
+      >
+        Movies</v-btn
+      >
+      <v-btn
+        v-if="$store.state.isLoggedIn"
+        color="error"
+        class="mr-4"
+        @click="logout"
+      >
+        Logout</v-btn
+      >
     </v-app-bar>
 
     <v-main>
@@ -40,11 +46,27 @@
 </template>
 
 <script>
+import Vue from "vue";
+
 export default {
   name: "App",
 
-  data: () => ({
+  data: () => {
     //
-  }),
+  },
+  methods: {
+    async redirect(path) {
+      await this.$router.push({ path: path });
+    },
+    async logout() {
+      let response = await Vue.axios.get("/api/logout");
+      if (response.data.success) {
+        alert("success!!");
+        await this.$router.push({ path: "/login" });
+      } else {
+        alert("error");
+      }
+    },
+  },
 };
 </script>
