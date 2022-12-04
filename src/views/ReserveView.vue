@@ -239,7 +239,7 @@ export default {
     reserveSeat: async function () {
       let formData = new FormData();
       formData.append("screeningId", this.screeningId);
-      formData.append("username", "sun");
+      formData.append("username", this.$store.state.username);
       formData.append("seatId", this.selectedSeat.id);
 
       await Vue.axios.post("/api/reserveSeat", formData).then((res) => {
