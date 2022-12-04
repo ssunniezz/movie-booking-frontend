@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center justify-center align-center">
+  <div class="text-center justify-center align-center mt-10 mx-5">
     <v-simple-table class="text-center">
       <template v-slot:default>
         <thead>
@@ -21,6 +21,7 @@
               <v-btn
                 depressed
                 color="warning"
+                class="mr-2"
                 @click="$router.push(`/edit/${user.username}`)"
               >
                 Edit Role
@@ -28,6 +29,7 @@
               <v-btn
                 depressed
                 color="primary"
+                class="mr-2"
                 @click="$router.push(`/password/${user.username}`)"
               >
                 <v-icon>mdi-key</v-icon>

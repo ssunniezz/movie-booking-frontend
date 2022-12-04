@@ -1,35 +1,51 @@
 <template>
   <v-container>
     <template>
-      <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field
-          v-model="username"
-          :rules="usernameRules"
-          label="Username"
-          required
-        ></v-text-field>
+      <v-row class="justify-center mt-10"> <h1>Login Page</h1> </v-row>
+      <v-row class="justify-center">
+        <v-col cols="4" class="justify-center align-center">
+          <v-form ref="form" v-model="valid" lazy-validation class="mt-10">
+            <v-text-field
+              v-model="username"
+              :rules="usernameRules"
+              label="Username"
+              required
+            ></v-text-field>
 
-        <v-text-field
-          type="password"
-          v-model="password"
-          :rules="passwordRules"
-          label="Password"
-          required
-        ></v-text-field>
+            <v-text-field
+              type="password"
+              v-model="password"
+              :rules="passwordRules"
+              label="Password"
+              required
+            ></v-text-field>
 
-        <v-btn :disabled="!valid" color="success" class="mr-4" @click="submit">
-          Login
-        </v-btn>
+            <v-row class="justify-center mt-2">
+              <v-btn
+                :disabled="!valid"
+                color="success"
+                class="mr-4"
+                @click="submit"
+              >
+                Login
+              </v-btn>
 
-        <v-btn color="error" class="mr-4" @click="reset"> Reset </v-btn>
+              <v-btn color="error" class="mr-4" @click="reset"> Reset </v-btn>
+            </v-row>
 
-        <div>
-          <br />
-          If you do not have an account
-        </div>
-        <br />
-        <v-btn color="primary" class="mr-4" @click="signup"> Sign up </v-btn>
-      </v-form>
+            <v-row class="justify-center mt-2">
+              <br />
+              If you do not have an account
+            </v-row>
+            <br />
+            <v-row class="justify-center mt-2">
+              <v-btn color="primary" class="mr-4" @click="signup">
+                Sign up
+              </v-btn>
+            </v-row>
+          </v-form>
+        </v-col>
+      </v-row>
     </template>
   </v-container>
 </template>

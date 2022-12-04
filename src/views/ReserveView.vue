@@ -102,7 +102,11 @@
                     ></v-select>
                   </v-col>
                 </v-row>
-                <v-row align="center" justify="center" v-if="admin">
+                <v-row
+                  align="center"
+                  justify="center"
+                  v-if="$store.state.role === 'ADMIN'"
+                >
                   <v-col cols="1" class="ml-n8">
                     <v-btn
                       depressed

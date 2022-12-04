@@ -1,47 +1,64 @@
 <template>
-  <v-app id="inspire">
-    <v-form ref="form" v-model="valid" lazy-validation>
-      <v-row class="justify-center">
-        <v-col cols="4">
-          <v-text-field
-            v-model="username"
-            :counter="10"
-            :rules="usernameRules"
-            label="Username"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="email"
-            :rules="emailRules"
-            label="E-mail"
-            required
-          ></v-text-field>
-          <v-text-field
-            label="Password"
-            v-model="password"
-            :rules="passwordRules"
-            type="password"
-            required
-          ></v-text-field>
-          <v-text-field
-            label="Confirm Password"
-            v-model="confirmPassword"
-            :rules="confirmPasswordRules.concat(passwordConfirmationRule)"
-            type="password"
-            required
-          ></v-text-field>
-          <v-btn :disabled="!valid" color="success" @click="validate">
-            Sign up
-          </v-btn>
-          <v-btn color="error" @click="reset"> Reset Form </v-btn>
-          <v-btn color="warning" @click="resetValidation">
-            Reset Validation
-          </v-btn>
+  <v-container>
+    <template>
+      <v-row class="justify-center mt-12"> <h1>Sign Up Page</h1> </v-row>
+      <v-row>
+        <v-col cols="15" class="align-center">
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-row class="justify-center">
+              <v-col cols="4">
+                <v-text-field
+                  v-model="username"
+                  :counter="10"
+                  :rules="usernameRules"
+                  label="Username"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  v-model="email"
+                  :rules="emailRules"
+                  label="E-mail"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  label="Password"
+                  v-model="password"
+                  :rules="passwordRules"
+                  type="password"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  label="Confirm Password"
+                  v-model="confirmPassword"
+                  :rules="confirmPasswordRules.concat(passwordConfirmationRule)"
+                  type="password"
+                  required
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row class="justify-center">
+              <v-btn
+                class="mr-4"
+                :disabled="!valid"
+                color="success"
+                @click="validate"
+              >
+                Sign up
+              </v-btn>
+              <v-btn class="mr-4" color="error" @click="reset">
+                Reset Form
+              </v-btn>
+              <v-btn class="mr-4" color="warning" @click="resetValidation">
+                Reset Validation
+              </v-btn>
+            </v-row>
+          </v-form>
         </v-col>
       </v-row>
-    </v-form>
-  </v-app>
+    </template>
+  </v-container>
 </template>
+
 <script>
 import Vue from "vue";
 
