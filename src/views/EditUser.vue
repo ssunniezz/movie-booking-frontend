@@ -1,12 +1,5 @@
 <template>
   <v-app id="inspire">
-    <div>
-      <v-app-bar color="blue" dense dark>
-        <v-toolbar-title>Edit account - ({{ user }})</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" class="mr-4" @click="logout"> Logout</v-btn>
-      </v-app-bar>
-    </div>
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-row class="justify-center mt-10">
         <v-col cols="3">
