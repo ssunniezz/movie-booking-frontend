@@ -53,7 +53,7 @@ export default {
         let response = await Vue.axios.post("/api/login", formData);
         if (response.data.success) {
           alert("Login successfully");
-          this.$router.push({ path: "/movie" });
+          await this.$router.push({ path: "/" });
         } else {
           alert("Incorrect username or password");
         }
