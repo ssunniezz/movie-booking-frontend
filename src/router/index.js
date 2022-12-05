@@ -78,6 +78,10 @@ router.beforeEach(async (to, from, next) => {
     } else if (to.name === "movie") {
       next();
     } else {
+      let l = router.resolve(to);
+      if (l.resolved.matched.length > 0) {
+        alert("Log in first");
+      }
       next({ name: "movie" });
     }
   }

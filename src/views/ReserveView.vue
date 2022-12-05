@@ -302,6 +302,6 @@ export default {
 }
 
 .basil--text {
-  color: royalblue !important;
+  color: black !important;
 }
 </style>
