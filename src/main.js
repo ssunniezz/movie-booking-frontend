@@ -6,6 +6,7 @@ import vuetify from "./plugins/vuetify";
 import "./plugins/vue-axios";
 
 Vue.config.productionTip = false;
+document.title = "SSC Theatre";
 
 new Vue({
   router,
