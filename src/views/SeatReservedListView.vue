@@ -35,7 +35,7 @@
               {{ auditorium.name.toUpperCase() }}
             </td>
             <td class="text-center grey lighten-5">
-              {{ mySeatList[index].screening.start.toString().concat(":00") }}
+              {{ mySeatList[index].screening.start.toString().concat(":00r") }}
             </td>
             <td class="text-center grey lighten-5">
               {{ mySeatList[index].seats.toString() }}

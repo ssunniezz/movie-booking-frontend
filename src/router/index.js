@@ -98,6 +98,9 @@ router.beforeEach(async (to, from, next) => {
     }
     if (to.name === "UserList" && response.data.role !== "ADMIN") {
       next({ name: "movie" });
+    }
+    if (to.name === "ChangePassword" && response.data.role !== "ADMIN") {
+      next({ name: "movie" });
     } else {
       let l = router.resolve(to);
       if (l.resolved.matched.length > 0) {
