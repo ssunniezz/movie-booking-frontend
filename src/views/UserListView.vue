@@ -37,7 +37,13 @@
               <template>
                 <v-dialog v-model="dialog" persistent max-width="290">
                   <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="error" dark v-bind="attrs" v-on="on">
+                    <v-btn
+                      v-if="$store.state.username !== user.username"
+                      color="error"
+                      dark
+                      v-bind="attrs"
+                      v-on="on"
+                    >
                       <v-icon>mdi-trash-can</v-icon>
                     </v-btn>
                   </template>
