@@ -24,6 +24,14 @@
       <v-btn class="mr-4" plain @click="redirect('/')"> Movies</v-btn>
       <v-btn
         v-if="$store.state.isLoggedIn"
+        class="mr-4"
+        plain
+        @click="redirect('/reserveList')"
+      >
+        My Seat</v-btn
+      >
+      <v-btn
+        v-if="$store.state.isLoggedIn"
         color="error"
         class="mr-4"
         @click="logout"
