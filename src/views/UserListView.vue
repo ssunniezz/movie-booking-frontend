@@ -19,6 +19,7 @@
             <td>{{ user.group }}</td>
             <td>
               <v-btn
+                v-if="$store.state.username !== user.username"
                 depressed
                 color="warning"
                 class="mr-2"
@@ -34,46 +35,40 @@
               >
                 <v-icon>mdi-key</v-icon>
               </v-btn>
-              <template>
-                <v-dialog v-model="dialog" persistent max-width="290">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                      v-if="$store.state.username !== user.username"
-                      color="error"
-                      dark
-                      v-bind="attrs"
-                      v-on="on"
-                    >
-                      <v-icon>mdi-trash-can</v-icon>
+              <v-dialog v-model="dialog" persistent max-width="290">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    v-if="$store.state.username !== user.username"
+                    color="error"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                    @click="temp = user.username"
+                  >
+                    <v-icon>mdi-trash-can</v-icon>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title class="text-h5">
+                    Are you sure to delete - ({{ temp }})
+                  </v-card-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="green darken-1" text @click="dialog = false">
+                      No, Not Delete
                     </v-btn>
-                  </template>
-                  <v-card>
-                    <v-card-title class="text-h5">
-                      Are you sure to delete - ({{ user.username }})
-                    </v-card-title>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn
-                        color="green darken-1"
-                        text
-                        @click="dialog = false"
-                      >
-                        No, Not Delete
-                      </v-btn>
-                      <v-btn
-                        color="red darken-1"
-                        text
-                        @click="deleteUser(user.username), (dialog = false)"
-                      >
-                        Yes, Delete
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-              </template>
+                    <v-btn
+                      color="red darken-1"
+                      text
+                      @click="deleteUser(temp), (dialog = false)"
+                    >
+                      Yes, Delete
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </td>
           </tr>
-          <tr></tr>
         </tbody>
       </template>
     </v-simple-table>
@@ -87,8 +82,8 @@ export default {
   data() {
     return {
       users: [],
-      user: "",
       dialog: false,
+      temp: null,
     };
   },
   methods: {
@@ -124,9 +119,9 @@ export default {
       );
     },
   },
-  mounted: function () {
-    this.show();
-    this.getUserInfo();
+  mounted: async function () {
+    await this.show();
+    await this.getUserInfo();
   },
 };
 </script>
